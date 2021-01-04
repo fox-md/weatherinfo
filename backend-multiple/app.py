@@ -10,10 +10,9 @@ app.secret_key = '3c0716f88780d6d642330dfa3c96dbca' # md5 -s incremental-istio
 owm = OWM(os.environ.get('OWM_API_KEY'))
 
 city_metric = {
-    'Austin, TX, US': Gauge('city_temp_austin_tx_us', 'Temperatures for Austin, TX, US'), 
-    'San Francisco, CA, US': Gauge('city_temp_san_fran_ca_us', 'Temperatures for San Francisco, CA, US '),
-    'Seattle, WA, US': Gauge('city_temp_seattle_wa_us', 'Temperatures for Seattle, WA, US'),
-    'New York, NY, US': Gauge('city_temp_new_york_ny_us', 'Temperatures for New York, NY, US')
+    'Balti, MD': Gauge('city_temp_balti_md', 'Temperatures for Balti, MD'), 
+    'Chisinau, MD': Gauge('city_temp_chisinau_md', 'Temperatures for Chisinau, MD'),
+    'Cahul, MD': Gauge('city_temp_cahul_md', 'Temperatures for Cahul, MD')
 }
 
 if os.environ.get('ENABLE_TRACING', None) is not None:
@@ -34,7 +33,7 @@ def current_weather():
     for city, metric in city_metric.iteritems():
         obs = owm.weather_at_place(city)
         w = obs.get_weather()
-        temp = w.get_temperature('fahrenheit')
+        temp = w.get_temperature('celsius')
         conditions = {
             'location': city,
             'temp_cur': temp['temp'],
